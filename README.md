@@ -2,27 +2,32 @@
 
 Projeto pessoal desenvolvido para analisar os preços dos combustíveis em São Paulo durante o **primeiro semestre de 2026**, utilizando dados públicos da **Agência Nacional do Petróleo, Gás Natural e Biocombustíveis — ANP**.
 
-Neste projeto, trabalhei com o processo completo de análise: obtenção dos dados, importação no PostgreSQL, exploração com SQL, tratamento no Power Query, modelagem, criação de medidas em DAX e construção do relatório no Power BI.
+Neste projeto, trabalhei com o processo completo de análise: obtenção dos dados, importação no PostgreSQL, exploração com SQL, tratamento no Power Query, modelagem, criação de medidas em DAX e construção de relatórios no Power BI.
 
 ## Contexto e objetivo
 
-O objetivo foi transformar os registros da pesquisa de preços em um relatório que permitisse acompanhar a evolução dos valores e comparar o mesmo combustível entre bandeiras, municípios e revendas.
+O objetivo foi transformar os registros da pesquisa de preços em relatórios que permitissem acompanhar a evolução dos valores e comparar o mesmo combustível entre bandeiras, municípios e revendas.
 
 Mantive a base nacional no PostgreSQL e utilizei filtros para analisar São Paulo, preservando os dados originais para consulta.
 
 ## Perguntas respondidas
 
-- Como os preços evoluíram ao longo dos meses?
-- Quais bandeiras apresentaram menores preços médios para o produto selecionado?
-- Quais municípios apresentaram maiores e menores preços médios?
-- Quais preços foram registrados em cada revenda e data?
-- Quantos registros, municípios e estabelecimentos estão presentes no recorte analisado?
+As análises foram organizadas em 13 perguntas de negócio, agrupadas nos seguintes temas:
+
+- Como está a cobertura da pesquisa em São Paulo, considerando registros, municípios, revendas e produtos?
+- Como evoluíram os preços médios ao longo dos meses e qual foi a variação no último mês disponível?
+- Quais foram os menores e maiores preços observados para o combustível selecionado?
+- Quais bandeiras apresentaram menores e maiores preços médios e como os registros se distribuem entre elas?
+- Quais municípios apresentaram menores e maiores preços médios e como se distribuem as revendas e os registros?
+- Quais preços foram registrados por cada revenda, considerando estabelecimento, município, produto e data?
+- Como os preços e a cobertura se relacionam ao cruzar bandeiras e municípios?
+- Como a evolução mensal dos preços muda quando analisamos municípios ou bandeiras específicas?
 
 ## Dados utilizados
 
 Os arquivos foram obtidos na [Série Histórica de Preços de Combustíveis da ANP](https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/serie-historica-de-precos-de-combustiveis).
 
-A base nacional original possui **422.418 registros**. Após o tratamento de duplicatas, passou a ter **422.412 registros**.
+A base nacional original possui **422.418 registros**. Após a remoção de seis duplicatas exatas no tratamento, passou a ter **422.412 registros**. Os seis registros removidos pertenciam a outros estados, portanto o total de São Paulo permaneceu inalterado.
 
 No recorte de São Paulo, foram identificados:
 
@@ -65,7 +70,7 @@ Os indicadores respondem aos filtros aplicados, permitindo analisar diferentes p
 
 ### 5. Dashboard
 
-O relatório foi organizado em uma capa e quatro páginas analíticas:
+O relatório no Power BI foi organizado em uma capa e quatro páginas analíticas:
 
 - **Visão Geral:** indicadores principais, evolução mensal dos preços e cobertura da pesquisa.
 - **Comparativo:** preços médios e quantidade de registros por bandeira.
@@ -73,6 +78,13 @@ O relatório foi organizado em uma capa e quatro páginas analíticas:
 - **Revendas:** consulta dos preços por estabelecimento, produto e data.
 
 Também configurei três páginas de dicas de ferramenta — tooltips — para complementar as análises de tempo, município e bandeira.
+
+## Relatórios do projeto
+
+Além do dashboard interativo, foram elaborados dois documentos para apresentar os resultados da análise:
+
+- **[Relatório Técnico](./Documenta%C3%A7%C3%A3o/Relatorio_Tecnico_Precos_Combustiveis_SP.pdf):** reúne as 13 perguntas de negócio, indicadores, critérios de cálculo, resultados, interpretações e observações metodológicas.
+- **[Relatório Executivo](./Documenta%C3%A7%C3%A3o/Relatorio_Executivo_Precos_Combustiveis_SP.pdf):** apresenta os principais resultados, comparações e conclusões de forma resumida, priorizando a leitura dos achados.
 
 ## Páginas do relatório
 
@@ -124,6 +136,7 @@ Também configurei três páginas de dicas de ferramenta — tooltips — para c
 - **[SQL](./SQL/):** consultas utilizadas na exploração e verificação dos dados.
 - **[Dados](./Dados/):** arquivos de origem e metadados.
 - **[Imagens](./Imagens/):** capturas das páginas e do modelo de dados.
+- **[Documentação](./Documenta%C3%A7%C3%A3o/):** relatórios técnico e executivo em PDF.
 
 ## Arquivos do projeto
 
@@ -144,7 +157,7 @@ Também configurei três páginas de dicas de ferramenta — tooltips — para c
 
 Com este projeto, pratiquei a integração entre SQL e Power BI e a conferência dos dados antes da construção dos indicadores.
 
-Também aprofundei meu entendimento sobre granularidade, relacionamentos, contexto de filtro e organização das informações para facilitar a leitura do relatório.
+Também aprofundei meu entendimento sobre granularidade, relacionamentos, contexto de filtro e organização das informações para facilitar a leitura dos relatórios.
 
 ## Observações sobre a análise
 
@@ -152,4 +165,8 @@ Os dados representam **preços pesquisados**, não volumes vendidos ou faturamen
 
 O GNV utiliza **R$/m³**, enquanto os demais combustíveis utilizam **R$/litro**. As comparações de preços devem considerar o mesmo produto e período.
 
-O relatório apresenta os municípios e estabelecimentos presentes na pesquisa utilizada, sem representar todos os postos de São Paulo.
+As médias apresentadas consideram os registros de preços pesquisados, atribuindo o mesmo peso a cada observação.
+
+A série de valor de compra não possui dados para o período analisado, portanto não foram calculadas margens de lucro.
+
+O relatório apresenta os municípios e estabelecimentos presentes na pesquisa utilizada, sem representar todos os municípios ou postos de São Paulo.
